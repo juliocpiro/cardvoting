@@ -1,1 +1,0 @@
-# cardvoting.github.io
