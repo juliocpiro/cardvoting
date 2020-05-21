@@ -1,0 +1,47 @@
+<h2>{{ sesion?.nombre }} - {{ sesion.admin }}</h2>
+<hr>
+
+<div class="row animated fadeIn faster">
+    <div class="col">
+        <form (ngSubmit)="actualizarPregunta(preguntaSesion)">
+            <div class="form-group my-1">
+                <label>Pregunta</label>
+                <input type="text" class="form-control" placeholder="admin" [(ngModel)]="preguntaSesion" name="pregunta">
+            </div>
+            <div class="form-group my-0">
+                <button class="btn btn-outline-primary w-100" type="submit">
+                    <i class="fa fa-hands-helping mr-2"></i>Enviar Pregunta
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col">
+        <div class="form-group my-1">
+            <input type="text" class="form-control" placeholder="Nombre nuevo particpante" [(ngModel)]="nuevoParticipante" name="nuevo_participante">
+        </div>
+        <div class="form-group my-0">
+            <button class="btn btn-primary w-100 mb-1" (click)="agregarParticipante(nuevoParticipante)">Agregar Participante</button>
+        </div>
+    </div>
+</div>
+<div class="row animated fadeIn faster">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Voto</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="sesion?.participante">
+          <tr *ngFor="let reg of objectKeys(sesion.participante)">
+            <td>{{ sesion.participante[reg].nombre }}</td>
+            <td>{{ sesion.participante[reg].voto }}</td>
+            <td><i class="fa fa-link mx-2" (click)="verLinkParticipante(reg)"></i></td>
+          </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,14 @@
+<h2>{{ sesion?.nombre }}</h2>
+<h3>{{ participante?.nombre }} - {{ sesion.pregunta }}</h3>
+<hr>
+<div class="row animated fadeIn faster">
+    <div class="col">
+        Tu voto es: {{ participante.voto }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <button *ngFor="let opc of opciones" class="opcion btn btn-primary m-1" (click)="actualizarVoto(opc.valor)">{{ opc.valor }}</button>
+    </div>
+</div>
