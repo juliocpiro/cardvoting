@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="sesion.nombre">
     <h2>{{ sesion?.nombre }}</h2>
     <h3>{{ participante?.nombre }} - {{ sesion.pregunta }}</h3>
     <hr>

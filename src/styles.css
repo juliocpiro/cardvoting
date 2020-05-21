@@ -4,3 +4,12 @@
     height: 120px;
     font-size: 2rem;
 }
+
+.material-icons{
+    line-height: 1rem;
+    vertical-align: middle;
+}
+
+.c-pointer{
+    cursor: pointer;
+}

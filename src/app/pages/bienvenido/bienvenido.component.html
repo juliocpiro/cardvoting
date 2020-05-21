@@ -1,20 +1,20 @@
-<h1>CardVoting</h1>
+<h1>Voto por cartas</h1>
 
 <div class="row animated fadeIn faster">
     <div class="col">
         <form (ngSubmit)="guardarSesion(f)" #f="ngForm">
             <div class="form-group">
-                <input required type="text" class="form-control" placeholder="Nombre de Sala" [(ngModel)]="sesion.nombre" name="nombre">
+                <input required type="text" class="form-control" placeholder="Ingrese nombre de Sala" [(ngModel)]="sesion.nombre" name="nombre">
             </div>
             <div class="form-group">
-                <input required type="text" class="form-control" placeholder="Nombre del administrador" [(ngModel)]="sesion.admin" name="admin">
+                <input required type="text" class="form-control" placeholder="Ingrese nombre del administrador de Sala" [(ngModel)]="sesion.admin" name="admin">
             </div>
             <div class="form-group">
                 <button class="btn btn-primary w-100" type="submit">
-                    <i *ngIf="loading.sesion" class="fa fa-spinner mr-2"></i>
+                    <span *ngIf="loading.sesion" class="material-icons">refresh</span>
                     <ng-container *ngIf="!loading.sesion">
-                        <i class="fa fa-hands-helping mr-2"></i>
-                        Crear e Ingresar
+                        <span class="material-icons mr-2">save</span>
+                        <span>Crear e Ingresar</span>
                     </ng-container>
                 </button>
             </div>
@@ -23,7 +23,7 @@
 </div>
 <p>
     <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        <i class="fa fa-history"></i>
+        <span class="material-icons">rotate_right</span>
     </button>
 </p>
     <div class="collapse" id="collapseExample">
@@ -42,7 +42,7 @@
                 <th scope="row">{{ i+1 }}</th>
                 <td>{{ sesion.nombre }}</td>
                 <td>{{ sesion.admin }}</td>
-                <td class="text-center"><i [routerLink]="['/sesion',sesion.id]" class="fa fa-link mx-2"></i></td>
+                <td class="text-center"><button [routerLink]="['/sesion',sesion.id]" class="btn btn-link material-icons">link</button></td>
               </tr>
             </tbody>
         </table>

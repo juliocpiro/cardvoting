@@ -1,55 +1,57 @@
-<h2>{{ sesion?.nombre }} - {{ sesion.admin }}</h2>
-<div class="row animated fadeIn faster">
-    <div class="col">
-        <form (ngSubmit)="actualizarPregunta(preguntaSesion)">
+<div class="container" *ngIf="sesion.nombre">
+    <h2>{{ sesion?.nombre }} - {{ sesion.admin }}</h2>
+    <div class="row animated fadeIn faster">
+        <div class="col">
+            <form (ngSubmit)="actualizarPregunta(preguntaSesion)">
+                <div class="form-group my-1">
+                    <label>Enviar pregunta a participantes:</label>
+                    <input type="text" class="form-control" placeholder="ejem: ¿Cual es su voto respecto a...?" [(ngModel)]="preguntaSesion" name="pregunta">
+                </div>
+                <div class="form-group my-0">
+                    <button [disabled]="loading.pregunta" class="btn btn-outline-primary w-100" type="submit">
+                        <span *ngIf="loading.pregunta" class="material-icons">refresh</span>
+                        <ng-container *ngIf="!loading.pregunta">
+                            <span class="material-icons mr-2">send</span>
+                            <span>Enviar pregunta</span>
+                        </ng-container>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col">
             <div class="form-group my-1">
-                <label>Hacer pregunta:</label>
-                <input type="text" class="form-control" placeholder="ejem: ¿Cual es su voto respecto a...?" [(ngModel)]="preguntaSesion" name="pregunta">
+                <input type="text" class="form-control" placeholder="agregar participante - ingrese nombre" [(ngModel)]="nuevoParticipante" name="nuevo_participante">
             </div>
             <div class="form-group my-0">
-                <button [disabled]="loading.pregunta" class="btn btn-outline-primary w-100" type="submit">
-                    <i *ngIf="loading.pregunta" class="fa fa-spinner mr-2"></i>
-                    <ng-container *ngIf="!loading.pregunta">
-                        <i class="fa fa-hands-helping mr-2"></i>
-                        Enviar Pregunta
+                <button [disabled]="loading.participante" class="btn btn-outline-secondary w-100 mb-1" (click)="agregarParticipante(nuevoParticipante)">
+                    <span *ngIf="loading.participante" class="material-icons">refresh</span>
+                    <ng-container *ngIf="!loading.participante">
+                        <span class="material-icons mr-2">perm_identity</span>
+                        <span>Agregar Participante</span>
                     </ng-container>
                 </button>
             </div>
-        </form>
-    </div>
-</div>
-<hr>
-<div class="row">
-    <div class="col">
-        <div class="form-group my-1">
-            <input type="text" class="form-control" placeholder="Nombre nuevo particpante" [(ngModel)]="nuevoParticipante" name="nuevo_participante">
-        </div>
-        <div class="form-group my-0">
-            <button [disabled]="loading.participante" class="btn btn-outline-secondary w-100 mb-1" (click)="agregarParticipante(nuevoParticipante)">
-                <i *ngIf="loading.participante" class="fa fa-spinner mr-2"></i>
-                <ng-container *ngIf="!loading.participante">
-                    <i class="fa fa-hands-helping mr-2"></i>
-                    Agregar Participante
-                </ng-container>
-            </button>
         </div>
     </div>
-</div>
-<div class="row animated fadeIn faster">
-    <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col" class="text-center">Voto</th>
-            <th scope="col" class="text-center">Acceso</th>
-          </tr>
-        </thead>
-        <tbody *ngIf="sesion?.participante">
-          <tr *ngFor="let reg of objectKeys(sesion.participante)">
-            <td>{{ sesion.participante[reg].nombre }}</td>
-            <td class="text-center">{{ sesion.participante[reg].voto }}</td>
-            <td class="text-center"><i class="fa fa-link mx-2" (click)="verLinkParticipante(reg)"></i></td>
-          </tr>
-        </tbody>
-    </table>
+    <div class="row animated fadeIn faster">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col" class="text-primary">Nombre</th>
+                <th scope="col" class="text-center text-primary">Voto</th>
+                <th scope="col" class="text-center text-secondary">Acceso</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="sesion?.participante">
+            <tr *ngFor="let reg of objectKeys(sesion.participante)">
+                <td>{{ sesion.participante[reg].nombre }}</td>
+                <td class="text-center">{{ sesion.participante[reg].voto }}</td>
+                <td class="text-center"><i class="material-icons c-pointer" (click)="verLinkParticipante(reg)">link</i></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
