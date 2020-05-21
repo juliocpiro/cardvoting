@@ -16,6 +16,10 @@ export class BienvenidoComponent implements OnInit {
   sesion: SesionModel = new SesionModel
   sesiones: SesionModel[];
 
+  loading = {
+    sesion: false
+  }
+
   constructor(
     private sesionService: SesionService,
     private router: Router
@@ -26,29 +30,22 @@ export class BienvenidoComponent implements OnInit {
   }
 
   guardarSesion( form: NgForm){
-    Swal.fire({
-      title: 'Procesando',
-      text: 'Creando Sala para sesión',
-      allowOutsideClick: false,
-      icon: 'info'
-    })
-    Swal.showLoading();
-    
+    if( form.invalid ){
+      Swal.fire({
+        text: 'Ingrese todos los datos',
+        icon: 'warning'
+      })
+      return
+    }
+
     let peticion: Observable<any>;
     peticion = this.sesionService.crearSesion(this.sesion)
-    
+    this.loading.sesion=true
+
     peticion.subscribe(
       res=>{
-        Swal.fire({
-          title: 'Creado',
-          text: 'Sala creada: '+this.sesion.nombre,
-          allowOutsideClick: false,
-          icon: 'success',
-          onClose: () => {
-            this.router.navigate([`/sesion/${res.id}`])
-          }
-        })
-        Swal.hideLoading();
+        this.loading.sesion=false
+        this.router.navigate([`/sesion/${res.id}`])
       }  
     )
   }

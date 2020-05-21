@@ -4,38 +4,47 @@
     <div class="col">
         <form (ngSubmit)="guardarSesion(f)" #f="ngForm">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Nombre de Sala" [(ngModel)]="sesion.nombre" name="nombre">
+                <input required type="text" class="form-control" placeholder="Nombre de Sala" [(ngModel)]="sesion.nombre" name="nombre">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Nombre del administrador" [(ngModel)]="sesion.admin" name="admin">
+                <input required type="text" class="form-control" placeholder="Nombre del administrador" [(ngModel)]="sesion.admin" name="admin">
             </div>
             <div class="form-group">
-                <button class="btn btn-outline-primary w-100" type="submit">
-                    <i class="fa fa-hands-helping mr-2"></i>Crear e Ingresar
+                <button class="btn btn-primary w-100" type="submit">
+                    <i *ngIf="loading.sesion" class="fa fa-spinner mr-2"></i>
+                    <ng-container *ngIf="!loading.sesion">
+                        <i class="fa fa-hands-helping mr-2"></i>
+                        Crear e Ingresar
+                    </ng-container>
                 </button>
             </div>
         </form>
     </div>
 </div>
-<hr>
-<div class="row animated fadeIn faster">
-    <table class="table">
-        <caption>Lista de sesiones</caption>
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Sala</th>
-            <th scope="col">Administrador</th>
-            <th scope="col">Identificador</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let sesion of sesiones; index as i">
-            <th scope="row">{{ i+1 }}</th>
-            <td>{{ sesion.nombre }}</td>
-            <td>{{ sesion.admin }}</td>
-            <td>{{ sesion.id }}</td>
-          </tr>
-        </tbody>
-    </table>
+<p>
+    <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        <i class="fa fa-history"></i>
+    </button>
+</p>
+    <div class="collapse" id="collapseExample">
+    <div class="card card-body">
+        <table class="table table-light text-secondary">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Sala</th>
+                <th scope="col">Administrador</th>
+                <th scope="col" class="text-center">Acceder</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sesion of sesiones; index as i">
+                <th scope="row">{{ i+1 }}</th>
+                <td>{{ sesion.nombre }}</td>
+                <td>{{ sesion.admin }}</td>
+                <td class="text-center"><i [routerLink]="['/sesion',sesion.id]" class="fa fa-link mx-2"></i></td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

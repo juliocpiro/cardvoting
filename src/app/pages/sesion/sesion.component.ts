@@ -18,6 +18,11 @@ export class SesionComponent implements OnInit {
   sesion: SesionModel = new SesionModel
   nuevoParticipante: string
   preguntaSesion: string
+
+  loading = {
+    pregunta:false,
+    participante:false
+  }
   
   constructor(
     private sesionService: SesionService,
@@ -33,17 +38,19 @@ export class SesionComponent implements OnInit {
 
   actualizarPregunta( pregunta: string ){
     if(pregunta==undefined || pregunta.trim()==''){
+      let text = (this.sesion.pregunta)?'Se mantendra la pregunta anterior':''
       Swal.fire({
         title: 'Ingrese pregunta',
-        text: 'Se mantendra la pregunta anterior',
+        text: text,
         allowOutsideClick: false,
         icon: 'warning'
       })
       this.preguntaSesion = this.sesion.pregunta
     }else{
+      this.loading.pregunta=true
       this.sesion.pregunta = pregunta
       this.sesionService.actualizarSesion(this.sesion).subscribe(
-        res => {}
+        res => this.loading.pregunta=false
       )
     }
   }
@@ -65,10 +72,13 @@ export class SesionComponent implements OnInit {
         icon: 'warning'
       })
     }else{
+      this.loading.participante=true
       let part = new ParticipanteModel
       part.nombre = nombre
+
       this.participanteService.agregarParticipante(this.sesionId, part).subscribe(
         res=>{
+          this.loading.participante=false
           this.nuevoParticipante=''
         }
       )
